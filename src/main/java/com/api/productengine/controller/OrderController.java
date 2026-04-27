@@ -3,6 +3,8 @@ package com.api.productengine.controller;
 import com.api.productengine.dto.OrderRequestDTO;
 import com.api.productengine.dto.OrderResponseDTO;
 import com.api.productengine.service.OrderService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,27 +20,28 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponseDTO create(@RequestBody OrderRequestDTO request) {
-        return service.create(request);
+    public ResponseEntity<OrderResponseDTO> create(@RequestBody OrderRequestDTO request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(request));
     }
 
     @GetMapping
-    public List<OrderResponseDTO> getAll() {
-        return service.findAll();
+    public ResponseEntity<List<OrderResponseDTO>> getAll() {
+        return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public OrderResponseDTO getById(@PathVariable Long id) {
-        return service.findById(id);
+    public ResponseEntity<OrderResponseDTO> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.findById(id));
     }
 
     @PutMapping("/{id}")
-    public OrderResponseDTO update(@PathVariable Long id, @RequestBody OrderRequestDTO request) {
-        return service.update(id, request);
+    public ResponseEntity<OrderResponseDTO> update(@PathVariable Long id, @RequestBody OrderRequestDTO request) {
+        return ResponseEntity.ok(service.update(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

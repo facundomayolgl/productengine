@@ -13,7 +13,7 @@ public class Order {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String orderNumber;
+    private String orderNumber = UUID.randomUUID().toString();
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id", nullable = false)
@@ -28,45 +28,26 @@ public class Order {
     public Order() {}
 
     public Order(Product product, Integer quantity, BigDecimal totalAmount) {
-        this.orderNumber = UUID.randomUUID().toString();
         this.product = product;
         this.quantity = quantity;
         this.totalAmount = totalAmount;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
 
-    public String getOrderNumber() {
-        return orderNumber;
-    }
+    public String getOrderNumber() { return orderNumber; }
 
-    public void setOrderNumber(String orderNumber) {
-        this.orderNumber = orderNumber;
-    }
+    public void setOrderNumber(String orderNumber) { this.orderNumber = orderNumber; }
 
-    public Product getProduct() {
-        return product;
-    }
+    public Product getProduct() { return product; }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    public void setProduct(Product product) { this.product = product; }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
+    public Integer getQuantity() { return quantity; }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
+    public void setQuantity(Integer quantity) { this.quantity = quantity; }
 
-    public BigDecimal getTotalAmount() {
-        return totalAmount;
-    }
+    public BigDecimal getTotalAmount() { return totalAmount; }
 
-    public void setTotalAmount(BigDecimal totalAmount) {
-        this.totalAmount = totalAmount;
-    }
+    public void setTotalAmount(BigDecimal totalAmount) { this.totalAmount = totalAmount; }
 }

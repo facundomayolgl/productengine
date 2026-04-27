@@ -27,6 +27,10 @@ public class OrderService {
 
     @Transactional
     public OrderResponseDTO create(OrderRequestDTO request) {
+        if (request.productId() == null) {
+            throw new ProductNotFoundException(-1L);
+        }
+
         if (request.quantity() == null || request.quantity() <= 0) {
             throw new InvalidProductQuantityException("La orden no puede tener 0 productos.");
         }
@@ -73,6 +77,10 @@ public class OrderService {
         Product oldProduct = existingOrder.getProduct();
         oldProduct.setStock(oldProduct.getStock() + existingOrder.getQuantity());
         productRepository.save(oldProduct);
+
+        if (request.productId() == null) {
+            throw new ProductNotFoundException(-1L);
+        }
 
         if (request.quantity() == null || request.quantity() <= 0) {
             throw new InvalidProductQuantityException("La orden no puede tener 0 productos.");
